@@ -1,0 +1,5 @@
+.idea
+.DS_Store
+
+# change the following to your pact folder
+pacts

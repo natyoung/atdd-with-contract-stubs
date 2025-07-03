@@ -1,0 +1,15 @@
+version: "2.4"
+services:
+  mockServer:
+      image: mockserver/mockserver:latest
+      ports:
+        - 9090:9090
+      environment:
+        MOCKSERVER_SERVER_PORT: 9090
+        MOCKSERVER_WATCH_INITIALIZATION_JSON: "true"
+        MOCKSERVER_PROPERTY_FILE: /config/mockserver.properties
+        MOCKSERVER_INITIALIZATION_JSON_PATH: /config/mockserverInitialization.json
+      volumes:
+        - type: bind
+          source: .
+          target: /config
