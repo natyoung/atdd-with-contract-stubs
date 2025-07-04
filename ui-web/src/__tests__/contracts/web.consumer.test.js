@@ -8,11 +8,10 @@ const provider = new PactV3({
   provider: 'bff-web',
 });
 
-const accountId = '1'
-
 describe('POST /deposit', () => {
   it('returns status 200', async () => {
     const amount = 1;
+    const accountId = '1'
     const expected = {result: 'success'};
     const EXPECTED_BODY = MatchersV3.like(expected);
 
@@ -33,11 +32,34 @@ describe('POST /deposit', () => {
       });
 
     return provider.executeTest(async (mockserver) => {
-      const walletService = new DepositService(mockserver.url);
-      const response = await walletService.deposit(accountId, amount)
+      const service = new DepositService(mockserver.url);
+      const response = await service.deposit(accountId, amount)
 
       expect(response.data).toMatchObject(expected);
       expect(response.status).toEqual(200);
+    });
+  });
+
+  it('returns status 404', async () => {
+    const amount = 1;
+    const accountId = '2'
+
+    provider
+      .given('accountId 2 does not exist')
+      .uponReceiving('a deposit request')
+      .withRequest({
+        method: 'POST',
+        path: `/deposit/${accountId}`,
+        body: {amount: amount}
+      })
+      .willRespondWith({
+        status: 404
+      });
+
+    return provider.executeTest(async (mockserver) => {
+      const service = new DepositService(mockserver.url);
+      await expect(service.deposit(accountId, amount))
+        .rejects.toThrow('Request failed with status code 404');
     });
   });
 });

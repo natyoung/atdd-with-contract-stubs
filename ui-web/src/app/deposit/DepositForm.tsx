@@ -15,10 +15,10 @@ export default function DepositForm() {
     setResult('')
     const service = new DepositService(host)
     const formData = new FormData(event.currentTarget)
-    const balance = formData.get('amount')
+    const amount = formData.get('amount')
 
     try {
-      const response = await service.deposit('1', Number(balance))
+      const response = await service.deposit('1', Number(amount))
       setResult(response.data.result)
     } catch (error) {
       setResult('An unknown error occurred.')
