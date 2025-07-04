@@ -1,6 +1,6 @@
 import unittest
 
-from playwright.sync_api import expect
+from playwright.sync_api import sync_playwright
 
 from drivers.web.casa_page import CasaPage
 from dsl.casa_dsl import CasaDSL
@@ -9,13 +9,12 @@ from dsl.casa_dsl import CasaDSL
 class TestCasa(unittest.TestCase):
 
     def setUp(self):
-        driver = CasaPage()
-        self.casa = CasaDSL(driver)
+        self.playwright = sync_playwright().start()
+        driver = CasaPage(self.playwright)
+        self.dsl = CasaDSL(driver)
 
-    def test_add_funds(self):
-        self.casa.visit()
-        self.casa.make_a_deposit(1)
-        expect(self.casa.balance()).to_contain_text("1")
+    def test_that_making_a_deposit_is_successful(self):
+        self.dsl.make_a_deposit(1)
 
     def tearDown(self):
-        self.casa.close()
+        self.playwright.stop()

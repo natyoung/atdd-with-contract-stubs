@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 
 class CasaDriver(ABC):
     @abstractmethod
-    def visit(self) -> None:
+    def initialise(self) -> None:
         pass
 
     @abstractmethod
