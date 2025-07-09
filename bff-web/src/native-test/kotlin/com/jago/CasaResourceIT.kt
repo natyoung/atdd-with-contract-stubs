@@ -3,4 +3,4 @@ package com.jago
 import io.quarkus.test.junit.QuarkusIntegrationTest
 
 @QuarkusIntegrationTest
-class GreetingResourceIT : GreetingResourceTest()
+class CasaResourceIT : CasaResourceTest()

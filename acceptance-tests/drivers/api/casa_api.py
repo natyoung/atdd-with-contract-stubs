@@ -3,8 +3,8 @@ from playwright.sync_api import expect
 from drivers.casa_driver import CasaDriver
 
 
-class CasaPage(CasaDriver):
-    URL: str = 'http://localhost:3000/deposit'
+class CasaApi(CasaDriver):
+    URL: str = 'http://localhost:8080/deposit'
 
     def __init__(self, playwright) -> None:
         self.playwright = playwright

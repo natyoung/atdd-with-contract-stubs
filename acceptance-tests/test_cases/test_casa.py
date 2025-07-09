@@ -13,7 +13,7 @@ class TestCasa(unittest.TestCase):
         driver = CasaPage(self.playwright)
         self.dsl = CasaDSL(driver)
 
-    def test_that_making_a_deposit_is_successful(self):
+    def test_make_a_deposit_to_existing_account(self):
         self.dsl.make_a_deposit(1)
 
     def tearDown(self):

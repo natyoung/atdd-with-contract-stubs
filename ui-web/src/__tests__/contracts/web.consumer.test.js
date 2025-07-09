@@ -3,7 +3,7 @@ import {MatchersV3, PactV3} from '@pact-foundation/pact';
 import DepositService from "../../app/lib/DepositService";
 
 const provider = new PactV3({
-  dir: path.resolve(process.env.PACT_FOLDER),
+  dir: path.resolve(process.env.PACT_FOLDER || './pacts'),
   consumer: 'ui-web',
   provider: 'bff-web',
 });
@@ -20,7 +20,7 @@ describe('POST /deposit', () => {
       .uponReceiving('a deposit request')
       .withRequest({
         method: 'POST',
-        path: `/deposit/${accountId}`,
+        path: `/casa/deposit/${accountId}`,
         body: {amount: amount}
       })
       .willRespondWith({
@@ -49,7 +49,7 @@ describe('POST /deposit', () => {
       .uponReceiving('a deposit request')
       .withRequest({
         method: 'POST',
-        path: `/deposit/${accountId}`,
+        path: `/casa/deposit/${accountId}`,
         body: {amount: amount}
       })
       .willRespondWith({

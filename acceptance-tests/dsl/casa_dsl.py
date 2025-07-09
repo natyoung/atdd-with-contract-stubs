@@ -7,6 +7,5 @@ class CasaDSL:
 
     def make_a_deposit(self, amount: int):
         self.driver.initialise()
-        result = self.driver.deposit(amount)
+        self.driver.deposit(amount)
         self.driver.close()
-        return result

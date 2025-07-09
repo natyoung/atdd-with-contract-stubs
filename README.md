@@ -28,6 +28,19 @@ The directory to read and write Pact files.
 
 # Outside in test-driven development
 
+### Test Cases
+High-level tests that describe the desired behavior in the language of the business domain.
+
+### DSL
+Abstracts technical details and focuses on the problem domain, using the UDL to improve test readability, maintainability, and collaboration by allowing non-technical stakeholders to understand and contribute to test cases.
+
+### Interface Layer 
+Drivers to interact with interfaces such as UIs, and APIs.
+
+### Technical Layer
+Infrastructure and setup code that supports test execution, ensuring isolation and repeatability.
+
+### This workshop will cover:
 - Acceptance test-driven development
 - Contract test-driven development
 - Test-driven development
@@ -58,8 +71,9 @@ At this point, there is no element for the test to interact with, so the test wi
 #### test case -> ui-bff -> verifiable output
 
 1. Run the provider contract verification and see that it fails.
-2. Create a new endpoint to support the UI consumer using TDD.
-3. See the provider contract verification pass.
+2. Create a new endpoint to support the UI consumer using TDD. (CasaResourceTest.kt).
+3. See the provider contract verification pass. (404 case should still fail).
+    3.1 Introduce a service and mock the response to cover both cases.
 4. Create the contract test between the BFF (consumer) and the CASA API (provider).
 5. Create an API driver to test the BFF.
 6. Start the BFF.
@@ -78,3 +92,10 @@ At this point, there is no element for the test to interact with, so the test wi
 6. Start the CASA API.
 7. Use the API driver to test the CASA API.
 8. Run the acceptance test for the CASA API.
+
+
+
+
+quarkus create app com.jago:bff-web \
+  --extensions=kotlin,rest,rest-jackson,rest-client-jackson,junit5 \
+  --gradle

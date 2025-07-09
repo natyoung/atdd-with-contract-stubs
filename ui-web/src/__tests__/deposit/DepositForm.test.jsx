@@ -39,8 +39,7 @@ describe('<DepositForm />', () => {
       fireEvent.change(screen.getByTestId('amount'), {target: {value: faker.number.int()}})
       fireEvent.click(screen.getByTestId('submit-amount'))
     })
-
-    const error = screen.getByTestId('result')
-    expect(error.textContent.length).toBeGreaterThan(0);
+    const result = screen.getByTestId('result')
+    expect(result.textContent.length).toBeGreaterThan(0);
   });
 });

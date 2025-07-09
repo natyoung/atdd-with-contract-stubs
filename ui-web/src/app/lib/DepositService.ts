@@ -9,7 +9,7 @@ export default class DepositService {
   }
 
   async deposit(accountId: string, amount: number): Promise<AxiosResponse> {
-    return axios.post<DepositResponse>(`${this.host}/deposit/${accountId}`, {
+    return axios.post<DepositResponse>(`${this.host}/casa/deposit/${accountId}`, {
       amount: amount
     })
       .then(res => res)
