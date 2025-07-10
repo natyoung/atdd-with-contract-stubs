@@ -23,6 +23,7 @@ dependencies {
     implementation("io.quarkus:quarkus-rest-client-jackson")
     implementation("io.quarkus:quarkus-jdbc-h2:3.24.2")
     implementation("io.quarkus:quarkus-hibernate-orm-panache-kotlin:3.24.2")
+    implementation("com.zaxxer:HikariCP:6.3.0")
     testImplementation("io.quarkus:quarkus-junit5")
     testImplementation("io.rest-assured:rest-assured:5.4.0")
     testImplementation("io.rest-assured:kotlin-extensions:5.4.0")
@@ -32,6 +33,7 @@ dependencies {
     testImplementation("au.com.dius.pact.provider:junit5:4.6.11")
     testImplementation(kotlin("test"))
     testImplementation("io.quarkus:quarkus-junit5-mockito:3.24.2")
+    testImplementation("com.h2database:h2:2.3.232")
 }
 java {
     sourceCompatibility = JavaVersion.VERSION_21

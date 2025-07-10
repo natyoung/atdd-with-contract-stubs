@@ -92,14 +92,3 @@ At this point, there is no element for the test to interact with, so the test wi
 6. Start the CASA API.
 7. Use the API driver to test the CASA API.
 8. Run the acceptance test for the CASA API.
-
-
-
-
-quarkus create app com.jago:bff-web \
-  --extensions=kotlin,rest,rest-jackson,rest-client-jackson,junit5 \
-  --gradle
-
-quarkus create app com.jago:casa \
-  --extensions=kotlin,rest,rest-jackson,rest-client-jackson,junit5 \
-  --gradle

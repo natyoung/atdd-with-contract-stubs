@@ -2,6 +2,7 @@ package com.jago.casamanagement.domain.model
 
 import io.quarkus.hibernate.orm.panache.kotlin.PanacheEntity
 import jakarta.persistence.Entity
+import jakarta.persistence.Id
 import java.math.BigDecimal
 
 @Entity

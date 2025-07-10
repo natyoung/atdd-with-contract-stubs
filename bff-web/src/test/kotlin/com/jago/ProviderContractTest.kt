@@ -31,6 +31,7 @@ class ProviderContractTest {
         context.verifyInteraction()
     }
 
+    // @State methods do not have access to the CDI context (GitHub issue) https://github.com/quarkiverse/quarkus-pact/issues/2
     @State("accountId 1 exists")
     fun setUpAccountId1Exists() {
         // docker run --rm -t --name pact-stubs -p 8091:8091 -v "${PACT_FOLDER}:/app/pacts" pactfoundation/pact-stub-server -p 8091 -d pacts --cors

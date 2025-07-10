@@ -1,4 +1,4 @@
-package com.jago
+package contracts
 
 import au.com.dius.pact.provider.junit5.HttpTestTarget
 import au.com.dius.pact.provider.junit5.PactVerificationContext
@@ -6,17 +6,19 @@ import au.com.dius.pact.provider.junit5.PactVerificationInvocationContextProvide
 import au.com.dius.pact.provider.junitsupport.Provider
 import au.com.dius.pact.provider.junitsupport.State
 import au.com.dius.pact.provider.junitsupport.loader.PactFolder
+import com.zaxxer.hikari.HikariDataSource
 import io.quarkus.test.junit.QuarkusTest
 import org.eclipse.microprofile.config.inject.ConfigProperty
+import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.TestTemplate
 import org.junit.jupiter.api.extension.ExtendWith
 
-@Provider("bff-web")
-@PactFolder("../ui-web/pacts")
+@Provider("casa")
+@PactFolder("../bff-web/build/pacts")
 @QuarkusTest
+@ExtendWith(PactVerificationInvocationContextProvider::class)
 class ProviderContractTest {
-
     @ConfigProperty(name = "quarkus.http.test-port")
     private lateinit var quarkusPort: String
 
@@ -33,11 +35,47 @@ class ProviderContractTest {
 
     @State("accountId 1 exists")
     fun setUpAccountId1Exists() {
-        // docker run --rm -t --name pact-stubs -p 8091:8091 -v "${PACT_FOLDER}:/app/pacts" pactfoundation/pact-stub-server -p 8091 -d pacts --cors
+        dataSource.connection.use { connection ->
+            connection.createStatement().use { statement ->
+                statement.execute("DELETE FROM CasaAccount WHERE accountId = '1'")
+                statement.execute("INSERT INTO CasaAccount (accountId, balance) VALUES ('1', 0.00)")
+            }
+        }
     }
 
     @State("accountId 2 does not exist")
     fun setUpAccountId2NotExists() {
-        // docker run --rm -t --name pact-stubs -p 8091:8091 -v "${PACT_FOLDER}:/app/pacts" pactfoundation/pact-stub-server -p 8091 -d pacts --cors
+        dataSource.connection.use { connection ->
+            connection.createStatement().use { statement ->
+                statement.execute("DELETE FROM CasaAccount WHERE accountId = '2'")
+            }
+        }
+    }
+
+    // Workaround for the quarkus CDI container being unavailable when @State methods run
+    companion object {
+        val dataSource: HikariDataSource = HikariDataSource().apply {
+            jdbcUrl = "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1"
+            username = "sa"
+            password = ""
+        }
+
+        @JvmStatic
+        @BeforeAll
+        fun setup() {
+            dataSource.connection.use { connection ->
+                connection.createStatement().use { statement ->
+                    statement.execute(
+                        """
+                        CREATE TABLE CasaAccount (
+                            id BIGINT NOT NULL AUTO_INCREMENT,
+                            accountId VARCHAR(255) PRIMARY KEY,
+                            balance DECIMAL(15,2)
+                        )
+                        """.trimIndent()
+                    )
+                }
+            }
+        }
     }
 }
