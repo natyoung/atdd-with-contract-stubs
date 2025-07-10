@@ -57,7 +57,7 @@ Infrastructure and setup code that supports test execution, ensuring isolation a
 
 ### 2. UI
 
-#### test case -> ui-web -> verifiable output
+#### test case -> ui-web -> bff (contract stub) -> verifiable output
 
 At this point, there is no element for the test to interact with, so the test will fail.
 
@@ -68,7 +68,7 @@ At this point, there is no element for the test to interact with, so the test wi
 
 ### 3. BFF
 
-#### test case -> ui-bff -> verifiable output
+#### test case -> ui-bff -> casa (contract stub) -> verifiable output
 
 1. Run the provider contract verification and see that it fails.
 2. Create a new endpoint to support the UI consumer using TDD. (CasaResourceTest.kt).
@@ -82,7 +82,7 @@ At this point, there is no element for the test to interact with, so the test wi
 
 ### 4. CASA
 
-#### test case -> casa -> verifiable output
+#### test case -> casa -> (3rd party API stubs) -> verifiable output
 
 1. Run the provider contract verification and see that it fails.
 2. Create a new endpoint to support the BFF consumer using TDD.
@@ -97,5 +97,9 @@ At this point, there is no element for the test to interact with, so the test wi
 
 
 quarkus create app com.jago:bff-web \
+  --extensions=kotlin,rest,rest-jackson,rest-client-jackson,junit5 \
+  --gradle
+
+quarkus create app com.jago:casa \
   --extensions=kotlin,rest,rest-jackson,rest-client-jackson,junit5 \
   --gradle

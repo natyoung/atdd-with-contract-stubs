@@ -33,11 +33,11 @@ class ProviderContractTest {
 
     @State("accountId 1 exists")
     fun setUpAccountId1Exists() {
-        // Option 1: run the consumer contract stub
+        // docker run --rm -t --name pact-stubs -p 8091:8091 -v "${PACT_FOLDER}:/app/pacts" pactfoundation/pact-stub-server -p 8091 -d pacts --cors
     }
 
     @State("accountId 2 does not exist")
     fun setUpAccountId2NotExists() {
-        // Option 1: run the consumer contract stub
+        // docker run --rm -t --name pact-stubs -p 8091:8091 -v "${PACT_FOLDER}:/app/pacts" pactfoundation/pact-stub-server -p 8091 -d pacts --cors
     }
 }

@@ -4,7 +4,7 @@ from drivers.casa_driver import CasaDriver
 
 
 class CasaPage(CasaDriver):
-    URL: str = 'http://localhost:3000/deposit'
+    URL: str = 'http://localhost:3000'
 
     def __init__(self, playwright) -> None:
         self.playwright = playwright
@@ -12,13 +12,12 @@ class CasaPage(CasaDriver):
         self.context = self.browser.new_context()
         self.page = self.context.new_page()
 
-    def initialise(self) -> None:
-        self.page.goto(f"{self.URL}")
-
-    def deposit(self, amount: int):
+    def deposit(self, account_id: str, amount: int) -> bool:
+        self.page.goto(f"{self.URL}/deposit") # {account_id when auth is set up}
         self.page.get_by_test_id('amount').type(str(amount))
         self.page.get_by_test_id('submit-amount').click()
-        return expect(self.page.get_by_test_id('result')).to_have_text("success")
+        expect(self.page.get_by_test_id('result')).to_have_text("success")
+        self.close()
 
     def close(self):
         self.context.close()
