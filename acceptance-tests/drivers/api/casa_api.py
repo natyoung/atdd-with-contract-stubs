@@ -10,3 +10,11 @@ class CasaApi(CasaDriver):
         response = requests.post(url, json=payload)
         response.raise_for_status()
         return response
+
+    def setup(self):
+        pass
+        # create new account {account_id}
+
+    def teardown(self):
+        pass
+        # clear data
