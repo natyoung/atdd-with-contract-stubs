@@ -27,3 +27,7 @@ Run
 ```bash
 pytest
 ```
+
+```bash
+pytest --collect-only
+```

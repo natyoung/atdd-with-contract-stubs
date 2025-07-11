@@ -1,20 +1,19 @@
 import requests
-from requests import Response
 
 from drivers.casa_driver import CasaDriver
 
+
 class CasaApi(CasaDriver):
-    def deposit(self, account_id: str, amount: int) -> Response:
-        url = f"http://localhost:8081/deposit"
-        payload = {"amount": amount, "accountId": 1}
-        response = requests.post(url, json=payload)
+    BASE_URL = f"http://localhost:8081"
+
+    def setup(self) -> None:
+        pass
+
+    def teardown(self) -> None:
+        pass
+
+    def deposit(self, account_id: str, amount: int) -> bool:
+        payload = {"amount": amount, "accountId": account_id}
+        response = requests.post(f"{self.BASE_URL}/deposit", json=payload)
         response.raise_for_status()
-        return response
-
-    def setup(self):
-        pass
-        # create new account {account_id}
-
-    def teardown(self):
-        pass
-        # clear data
+        return response.status_code == 200

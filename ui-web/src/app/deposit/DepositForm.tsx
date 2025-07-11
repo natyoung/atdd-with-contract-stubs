@@ -21,7 +21,7 @@ export default function DepositForm() {
       const response = await service.deposit('1', Number(amount))
       setResult(response.data.result)
     } catch (error) {
-      setResult('An unknown error occurred.')
+      setResult(`Error: ${error}`)
     } finally {
       setIsLoading(false)
     }
