@@ -4,8 +4,9 @@ scenarios('../features/deposit.feature')
 
 
 @given(parsers.parse('I have an existing account with ID "{account_id}"'))
-def setup_account(account_id: str):
-    pass  # Implement if required, e.g., call driver.setup()
+def setup_account(request, account_id: str):
+    driver = request.getfixturevalue('casa_driver')
+    driver.setup()
 
 
 @when(parsers.parse('I make a deposit of {amount:d} to account "{account_id}"'))

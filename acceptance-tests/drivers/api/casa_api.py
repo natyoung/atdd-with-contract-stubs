@@ -20,7 +20,6 @@ class CasaApi(CasaDriver):
         pass
 
     def deposit(self, account_id: str, amount: int) -> bool:
-        self.setup()
         payload = {"amount": amount, "accountId": account_id}
         response = requests.post(f"{self.BASE_URL}/deposit", json=payload)
         response.raise_for_status()
