@@ -3,7 +3,7 @@ if [[ -z "${PACT_FOLDER}" ]]; then
   echo "PACT_FOLDER not set"
   exit 1;
 else
-  echo "PACT_FOLDER is se to: ${PACT_FOLDER}"
+  echo "PACT_FOLDER is set to: ${PACT_FOLDER}"
 fi
 
 dependency_check() {
@@ -14,6 +14,7 @@ dependency_check() {
   command -v java >/dev/null 2>&1 || { echo >&2 "java was not found.  Aborting."; exit 1; }
   command -v docker >/dev/null 2>&1 || { echo >&2 "docker is not running.  Aborting."; exit 1; }
   command -v docker-compose >/dev/null 2>&1 || { echo >&2 "docker-compose was not found.  Aborting."; exit 1; }
+  echo "dependency_check OK"
 }
 
 setup()
@@ -49,13 +50,16 @@ cat <<EOF
 
     setup               Initialise the apps.
     run_pact_stubs      Uses the contracts in $PACT_FOLDER as stub services for testing.
-
+    dependency_check    Check for required dependencies.
 EOF
 }
 
 case $1 in
 setup)
 setup
+;;
+dependency_check)
+dependency_check
 ;;
 run_pact_stubs)
 run_pact_stubs
