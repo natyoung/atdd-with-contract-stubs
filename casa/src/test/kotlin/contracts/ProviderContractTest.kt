@@ -9,7 +9,6 @@ import au.com.dius.pact.provider.junitsupport.loader.PactFolder
 import com.zaxxer.hikari.HikariDataSource
 import io.quarkus.test.junit.QuarkusTest
 import org.eclipse.microprofile.config.inject.ConfigProperty
-import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.TestTemplate
 import org.junit.jupiter.api.extension.ExtendWith
@@ -38,7 +37,7 @@ class ProviderContractTest {
         dataSource.connection.use { connection ->
             connection.createStatement().use { statement ->
                 statement.execute("DELETE FROM CasaAccount WHERE accountId = '1'")
-                statement.execute("INSERT INTO CasaAccount (accountId, balance) VALUES ('1', 0.00)")
+                statement.execute("INSERT INTO CasaAccount (id, accountId, balance) VALUES (1, '1', 0.00)")
             }
         }
     }
@@ -58,24 +57,6 @@ class ProviderContractTest {
             jdbcUrl = "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1"
             username = "sa"
             password = ""
-        }
-
-        @JvmStatic
-        @BeforeAll
-        fun setup() {
-            dataSource.connection.use { connection ->
-                connection.createStatement().use { statement ->
-                    statement.execute(
-                        """
-                        CREATE TABLE CasaAccount (
-                            id BIGINT NOT NULL AUTO_INCREMENT,
-                            accountId VARCHAR(255) PRIMARY KEY,
-                            balance DECIMAL(15,2)
-                        )
-                        """.trimIndent()
-                    )
-                }
-            }
         }
     }
 }

@@ -31,3 +31,20 @@ Tests are run per service using its driver, e.g.
 - ```pytest --driver=casa_api```
 
 Add more drivers as needed.
+
+
+### Dependencies
+
+Depending on the os, the following may be needed for psycopg2:
+
+```text
+brew install openssl@3 libpq postgresql
+
+export LDFLAGS="-L$(brew --prefix openssl@3)/lib -L$(brew --prefix libpq)/lib"
+export CPPFLAGS="-I$(brew --prefix openssl@3)/include -I$(brew --prefix libpq)/include"
+export PATH="$(brew --prefix libpq)/bin:$PATH"
+
+xcode-select --install
+
+pip install psycopg2
+```
