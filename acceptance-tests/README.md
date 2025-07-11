@@ -3,10 +3,10 @@
 This project uses a layered design to make the test cases less brittle when lower level implementation details change.
 
 - What
-    - [test_cases](./test_cases) - Derived from the acceptance criteria.
-    - [dsl](./dsl) - Use a ubiquitous domain language.
+  - [features](./features) - Features and scenarios ere derived from the user story and acceptance criteria.
+  - [steps](./steps) - Uses a ubiquitous domain language to abstract implementation details.
 - How
-    - [drivers](./drivers) - Instrumentation per device.
+  - [drivers](./drivers) - Technical details protecting the higher level layers from changes to implementation details.
 
 ### Dependency map:
 
@@ -22,12 +22,12 @@ pip install -r requirements.txt
 playwright install
 ```
 
-Run
+## Run
 
-```bash
-pytest
-```
+Tests are run per service using its driver, e.g.
 
-```bash
-pytest --collect-only
-```
+- ```pytest --driver=web```
+- ```pytest --driver=bff_api```
+- ```pytest --driver=casa_api```
+
+Add more drivers as needed.

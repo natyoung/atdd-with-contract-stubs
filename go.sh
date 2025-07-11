@@ -40,7 +40,7 @@ setup()
 
 run_pact_stubs()
 {
-  docker run --rm -t --name pact-stubs -p 8080:8080 -v "${PACT_FOLDER}:/app/pacts" pactfoundation/pact-stub-server -p 8080 -d pacts --cors &
+  docker run --rm -t --name pact-stubs -p ${PORT}:${PORT} -v "${PACT_FOLDER}:/app/pacts" pactfoundation/pact-stub-server -p ${PORT} -d pacts --cors
 }
 
 print_usage()
