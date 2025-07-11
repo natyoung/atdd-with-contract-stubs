@@ -15,7 +15,5 @@ yarn dev
 ## Test
 
 ```text
-PACT_FOLDER=<dir> yarn test
+PACT_FOLDER=./pacts yarn test
 ```
-
-Pact files are output to PACT_FOLDER

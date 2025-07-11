@@ -33,6 +33,8 @@ Starting with an acceptance test from the user's perspective.
 
 ### 1. Create a failing acceptance test
 
+[./acceptance-tests/README.md](./acceptance-tests/README.md)
+
 1. Write a specification in `./acceptance-tests/features` based on the user story and ACs.
 2. Write the high level steps in `./acceptance-tests/steps` using a ubiquitous domain language to build up a re-usable DSL.
 3. Re-use or extend the drivers in `./acceptance-tests/drivers` to isolate the technical details. Use a web driver in `./acceptance-tests/drivers/web` for the first step.
@@ -59,7 +61,7 @@ At this point, there is no element for the test to interact with, so the test wi
 3. Satisfy the `ui-web` API contract expectations using TDD. (e.g. this could begin by adding a controller test in CasaResourceTest.kt).
 4. Continue with component and unit tests until all the provider verification tests pass.
 5. Create the contract test between `bff-web` (consumer) and `casa` (provider).
-6. Start the CASA API contract stub, e.g. `PACT_FOLDER=<absolute-path-to>/bff-web/build/pacts PORT=8081 ./go.sh run_pact_stubs`.
+6. Start the `casa` API contract stub, e.g. `PACT_FOLDER=<absolute-path-to>/bff-web/build/pacts PORT=8081 ./go.sh run_pact_stubs`.
 7. Run the acceptance test for the BFF.
 
 ### 4. CASA

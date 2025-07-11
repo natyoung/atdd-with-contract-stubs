@@ -1,6 +1,6 @@
 # casa
 
-CASA account domain.
+Current Account and Savings Account (CASA) account domain.
 
 ## Test
 
