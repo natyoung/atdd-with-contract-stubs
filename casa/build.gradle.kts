@@ -16,14 +16,16 @@ val quarkusPlatformVersion = "3.16.1"
 
 dependencies {
     implementation(enforcedPlatform("$quarkusPlatformGroupId:$quarkusPlatformArtifactId:$quarkusPlatformVersion"))
-    implementation("io.quarkus:quarkus-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("io.quarkus:quarkus-kotlin")
     implementation("io.quarkus:quarkus-rest")
     implementation("io.quarkus:quarkus-rest-jackson")
     implementation("io.quarkus:quarkus-rest-client-jackson")
-    implementation("io.quarkus:quarkus-jdbc-h2:3.24.2")
+    implementation("io.quarkus:quarkus-jdbc-h2")
     implementation("io.quarkus:quarkus-hibernate-orm-panache-kotlin:3.24.2")
+    implementation("io.quarkus:quarkus-jdbc-postgresql")
     implementation("com.zaxxer:HikariCP:6.3.0")
+
     testImplementation("io.quarkus:quarkus-junit5")
     testImplementation("io.rest-assured:rest-assured:5.4.0")
     testImplementation("io.rest-assured:kotlin-extensions:5.4.0")

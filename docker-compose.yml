@@ -12,6 +12,19 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
       POSTGRES_DB: postgres
+  postgres-2:
+    platform: linux/amd64
+    image: postgres
+    healthcheck:
+      test: psql postgres --command "select 1" -U postgres
+    volumes:
+      - postgres-volume:/var/lib/postgresql/data-2
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
 
   pact-broker:
     platform: linux/amd64

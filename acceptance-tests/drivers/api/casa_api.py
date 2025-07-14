@@ -1,14 +1,14 @@
 import requests
 
 from drivers.casa_driver import CasaDriver
-from drivers.infrastructure.h2_db_connector import H2DBConnector
+from drivers.infrastructure.psql_db_connector import PsqlDbConnector
 
 
 class CasaApi(CasaDriver):
     BASE_URL = f"http://localhost:8081"
 
     def setup(self) -> None:
-        connector = H2DBConnector(dbname="mem:devdb", port=5435)
+        connector = PsqlDbConnector()
         try:
             connector.connect()
             connector.execute("DELETE FROM CasaAccount")
@@ -17,7 +17,9 @@ class CasaApi(CasaDriver):
             connector.close()
 
     def teardown(self) -> None:
-        pass
+        connector = PsqlDbConnector()
+        connector.connect()
+        connector.execute("DELETE FROM CasaAccount")
 
     def deposit(self, account_id: str, amount: int) -> bool:
         payload = {"amount": amount, "accountId": account_id}

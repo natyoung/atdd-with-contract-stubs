@@ -1,12 +1,12 @@
 import psycopg2
 
-class H2DBConnector:
+class PsqlDbConnector:
     def __init__(self,
-                 dbname: str = "mem:devdb",  # Match your H2 DB name
+                 dbname: str = "postgres",
                  host: str = "localhost",
-                 port: int = 5435,
-                 username: str = "sa",
-                 password: str = "sa"):
+                 port: int = 5432,
+                 username: str = "postgres",
+                 password: str = "password"):
         self.dbname = dbname
         self.host = host
         self.port = port

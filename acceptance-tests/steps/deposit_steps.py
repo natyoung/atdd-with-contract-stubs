@@ -13,10 +13,12 @@ def setup_account(request, account_id: str):
 def make_deposit(request, amount: int, account_id: str):
     driver = request.getfixturevalue('casa_driver')
     response = driver.deposit(account_id, amount)
-    request.node.stash['response'] = response  # Isolated per-scenario stash
+    request.node.stash['response'] = response
 
 
 @then(parsers.parse('the deposit is successful'))
 def verify_deposit_success(request):
-    response = request.node.stash.get('response', '')
+    driver = request.getfixturevalue('casa_driver')
+    response = request.node.stash.get('response', '')  # Isolated per-scenario stash
+    driver.teardown()
     assert response is True
