@@ -14,7 +14,14 @@ dependency_check() {
   command -v java >/dev/null 2>&1 || { echo >&2 "java was not found.  Aborting."; exit 1; }
   command -v docker >/dev/null 2>&1 || { echo >&2 "docker is not running.  Aborting."; exit 1; }
   command -v docker-compose >/dev/null 2>&1 || { echo >&2 "docker-compose was not found.  Aborting."; exit 1; }
-  echo "dependency_check OK"
+  command -v node >/dev/null 2>&1 || { echo >&2 "node was not found.  Aborting."; exit 1; }
+
+  if [[ $(node --version) == v22.* ]]; then
+      echo "dependency_check OK"
+  else
+      echo "Node.js version is not v22.*: $NODE_VERSION"
+      exit 1
+  fi
 }
 
 setup()
