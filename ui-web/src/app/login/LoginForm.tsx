@@ -22,7 +22,7 @@ export default function LoginForm() {
       const result = await signIn("credentials", {
         accountId: accountId,
         password,
-        redirect: false,
+        redirect: true,
       });
 
       if (result?.error) {

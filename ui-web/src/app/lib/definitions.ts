@@ -5,3 +5,11 @@ export class DepositResponse {
     this.result = result;
   }
 }
+
+export class LoginResponse {
+  user: string;
+
+  constructor(username: string) {
+    this.user = username;
+  }
+}

@@ -1,5 +1,6 @@
 import NextAuth, {NextAuthOptions} from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import LoginService from "@/app/lib/LoginService";
 
 const host = process.env.API_BASE_URI || "http://0.0.0.0:8080";
 
@@ -9,17 +10,14 @@ export const authOptions: NextAuthOptions = {
       name: "Credentials",
       credentials: {
         accountId: {label: "accountId", type: "text"},
-        password: {label: "Password", type: "password"},
+        password: {label: "password", type: "password"},
       },
       async authorize(credentials) {
-        const res = await fetch(`${host}/login`, {
-          method: "POST",
-          body: JSON.stringify(credentials),
-          headers: {"Content-Type": "application/json"},
-        });
-        const user = await res.json();
-        if (res.ok && user) {
-          return user; // BFF returns user object on success
+        const service = new LoginService(host);
+        // @ts-ignore
+        const response = await service.login(credentials.accountId, credentials.password)
+        if (response.status == 200) {
+          return response.data; // BFF returns user object on success
         }
         return null;
       },

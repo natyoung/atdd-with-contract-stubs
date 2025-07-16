@@ -4,9 +4,11 @@ import { authOptions } from "../api/auth/[...nextauth]/route";
 import DepositForm from "@/app/deposit/DepositForm";
 
 export default async function Page() {
-  const session = await getServerSession(authOptions);
-  if (!session) {
-    redirect("/login");
+  if (process.env.DISABLE_AUTH !== 'true') {
+    const session = await getServerSession(authOptions);
+    if (!session) {
+      redirect("/login");
+    }
   }
 
   return (

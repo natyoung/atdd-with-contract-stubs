@@ -11,14 +11,14 @@ import org.jboss.resteasy.reactive.RestResponse
 @ApplicationScoped
 @Path("/login")
 class LoginResource {
+    data class Login(val accountId: String, val password: String)
     data class User(val username: String)
 
     @POST
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    fun login(): RestResponse<User> {
-        return RestResponse.ok(User("jimbob"))
-
+    fun login(login: Login): RestResponse<User> {
+        return RestResponse.ok(User(login.accountId))
     }
 }
