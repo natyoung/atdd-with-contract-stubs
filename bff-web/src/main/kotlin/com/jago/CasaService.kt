@@ -15,19 +15,10 @@ import org.jboss.resteasy.reactive.RestResponse
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 interface CasaService {
+    data class CasaDepositRequest(val accountId: String, val amount: Int)
+    data class CasaDepositResponse(val result: String = "")
+
     @Path("/deposit")
     @POST
     fun deposit(request: CasaDepositRequest): RestResponse<CasaDepositResponse>
-
-    data class CasaDepositRequest(val accountId: String, val amount: Int)
-
-    class CasaDepositResponse {
-        var result: String = ""
-
-        constructor()
-
-        constructor(result: String) {
-            this.result = result
-        }
-    }
 }

@@ -5,6 +5,7 @@ import com.jago.casamanagement.domain.service.CasaService
 import com.jago.casamanagement.infrastructure.persistence.CasaRepository
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.inject.Inject
+import jakarta.transaction.Transactional
 import jakarta.ws.rs.WebApplicationException
 import java.math.BigDecimal
 
@@ -13,6 +14,7 @@ class CasaApplicationService @Inject constructor(
     private val casaRepository: CasaRepository,
     private val casaService: CasaService
 ) {
+    @Transactional
     fun deposit(accountId: String, amount: Int): CasaAccount {
         val account = casaRepository.findByAccountId(accountId)
             ?: throw WebApplicationException("Account not found", 404)
