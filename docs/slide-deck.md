@@ -30,14 +30,16 @@ ___
 # Encouraged
 
 - Work on one machine
-- One driver
-- Rotate the driver frequently (set a timer)
+- One person typing
+- Rotate the typer frequently (set a timer)
 - Commit frequently (with the tests passing)
 - Participation
 
 ---
 
 # Sample app
+
+A banking app, that has a CASA account.
 
 - Currently, the user can only deposit.
 - It's a very small bank with one user. (accountId "1")
@@ -55,17 +57,7 @@ A _small_, valuable increment to the behaviour of the system from the user's per
 Aim for:
 - Write from the perspective of the user.
 - Focus on _what_ rather than _how_.
-- Use a ubiquitous Language that's understandable by everyone.
-
----
-
-# Domain Specific Language
-
-The language of the problem domain.
-
-Understood by everyone on the team, including stakeholders.
-
-No jargon.
+- Use a ubiquitous language that's understandable by everyone.
 
 ---
 
@@ -77,6 +69,16 @@ So that _
 
 You can use this template, although you don't have to.
 The user story is a placeholder for a conversation.
+
+---
+
+# Domain Specific Language
+
+The language of the problem domain.
+
+Understood by everyone on the team, including stakeholders.
+
+No jargon.
 
 ---
 
@@ -134,7 +136,7 @@ Feature: Buy a book
 Scenario: Find a book
     Given I am a verified Amazon prime member
     When I go to amazon.com
-    Then I click on "login"
+    Then I click on the login button
     And I enter my username "Jim Bob"
     And I enter my password "password1"
     And I click on the login button
@@ -152,10 +154,11 @@ This is brittle to underlying changes in the implementation, and difficult to re
 
 # 4 Layer Test Architecture
 
-1. Test Cases
-2. DSL
-3. Drivers
-4. SUT
+1. Test Cases (acceptance-tests/features) _What_
+2. DSL (acceptance-tests/steps & features) _What_
+3. Drivers (acceptance-tests/drivers) _How_
+4. SUT (ui-web, bff-web, casa)
+
 <style scoped>
 div {
   font-size: 13px;
@@ -192,6 +195,8 @@ We have web and API drivers. Create more if necessary.
 
 - Follow step 1 in the README
 
+![width:553px height:234px](fail-at.png)
+
 ---
 
 # TDD
@@ -208,6 +213,14 @@ We have web and API drivers. Create more if necessary.
 - Avoids E2E integration testing
 - Contract Stubs
 - Temporally decoupled API development
+
+---
+# Test strategy
+
+- Blue: SUT
+- Orange: Contract stub
+
+![width:450px height:370px](test-strategy.png)
 
 ---
 
@@ -232,10 +245,12 @@ Follow step 4 in the README
 
 # Do you see a pattern?
 
-We avoid E2E tests by measuring the points of interest.
+We avoid E2E tests by measuring at the points of interest.
 
 - The test pyramid is not very useful anymore.
 - Other models, like the Swiss cheese model are more relevant.
+
+[Swiss cheese model](https://blog.korny.info/2020/01/20/the-swiss-cheese-model-and-acceptance-tests.html)
 
 ---
 

@@ -33,7 +33,7 @@ class ProviderContractTest {
 
     @State("accountId 1 exists")
     fun setUpAccountId1Exists() {
-        // docker run --rm -t --name pact-stubs -p 8091:8091 -v "${PACT_FOLDER}:/app/pacts" pactfoundation/pact-stub-server -p 8091 -d pacts --cors
+        // PACT_FOLDER=<absolute-path-to>/build/pacts PORT=8091 ./go.sh run_pact_stubs
         // We could use wiremock or webmock here, though that interaction wouldn't be verified on both sides in a CI pipeline after every commit.
     }
 

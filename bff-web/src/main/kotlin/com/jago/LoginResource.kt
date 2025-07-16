@@ -11,7 +11,7 @@ import org.jboss.resteasy.reactive.RestResponse
 @ApplicationScoped
 @Path("/login")
 class LoginResource {
-    data class Login(val accountId: String, val password: String)
+    data class Login(val accountId: String = "", val password: String = "")
     data class User(val username: String)
 
     @POST

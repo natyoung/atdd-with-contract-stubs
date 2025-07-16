@@ -31,7 +31,7 @@ class CasaResource {
     ): RestResponse<CasaService.CasaDepositResponse> {
         try {
             val casaDepositRequest = CasaService.CasaDepositRequest(accountId, request.amount)
-            val response = casaService.deposit(casaDepositRequest)
+            val response: RestResponse<CasaService.CasaDepositResponse> = casaService.deposit(casaDepositRequest)
             return when (response.status) {
                 RestResponse.StatusCode.OK -> return response
                 RestResponse.StatusCode.NOT_FOUND -> RestResponse.status(RestResponse.Status.NOT_FOUND)
