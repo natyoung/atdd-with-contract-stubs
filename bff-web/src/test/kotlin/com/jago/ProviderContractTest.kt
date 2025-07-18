@@ -40,4 +40,8 @@ class ProviderContractTest {
     @State("accountId 2 does not exist")
     fun setUpAccountId2NotExists() {
     }
+
+    @State("accountId 1 has a balance of 1")
+    fun setUpAccount1Balance1Exists() {
+    }
 }

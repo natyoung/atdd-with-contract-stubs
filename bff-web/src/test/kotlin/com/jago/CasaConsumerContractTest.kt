@@ -72,4 +72,28 @@ class CasaConsumerContractTest {
         }
         assertEquals(404, exception.response.status)
     }
+
+    @Pact(consumer = "bff-web")
+    fun balanceRequestSuccess(builder: PactDslWithProvider): V4Pact {
+        return builder
+            .given("accountId 1 exists with balance of 1")
+            .uponReceiving("a balance request for account 1")
+            .path("/balance/1")
+            .method("GET")
+            .willRespondWith()
+            .status(200)
+            .body("""{"balance": 1}""", "application/json")
+            .toPact(V4Pact::class.java)
+    }
+
+    @Test
+    @PactTestFor(pactMethod = "balanceRequestSuccess")
+    fun `test balance success for existing account`(mockServer: MockServer) {
+        val casaService = RestClientBuilder.newBuilder()
+            .baseUri(URI.create(mockServer.getUrl()))
+            .build(CasaService::class.java)
+
+        val result = casaService.balance("1")
+        assertEquals(200, result.status)
+    }
 }

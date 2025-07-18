@@ -47,7 +47,7 @@ class CasaResourceTest {
     }
 
     @Test
-    fun `should handle account not found`() {
+    fun `should handle account not found for deposit`() {
         val depositRequest = CasaResource.DepositRequest(1)
         val casaServiceRequest = CasaService.CasaDepositRequest(accountId, depositRequest.amount)
 
@@ -67,7 +67,7 @@ class CasaResourceTest {
     }
 
     @Test
-    fun `should handle unknown`() {
+    fun `should handle unknown error for deposit`() {
         val depositRequest = CasaResource.DepositRequest(1)
         val casaServiceRequest = CasaService.CasaDepositRequest(accountId, depositRequest.amount)
 
@@ -84,5 +84,20 @@ class CasaResourceTest {
             .then()
             .log().all()
             .statusCode(500)
+    }
+
+    @Test
+    fun `should return the balance`() {
+        every { casaService.balance(accountId) } returns RestResponse.ok(CasaService.CasaBalanceResponse(1))
+
+        given()
+            .contentType(ContentType.JSON)
+            .`when`()
+            .get("/casa/balance/$accountId")
+            .then()
+            .log().all()
+            .statusCode(200)
+            .contentType(ContentType.JSON)
+            .body("balance", equalTo(1))
     }
 }

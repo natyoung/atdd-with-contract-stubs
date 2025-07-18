@@ -3,6 +3,7 @@ package com.jago
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.inject.Inject
 import jakarta.ws.rs.Consumes
+import jakarta.ws.rs.GET
 import jakarta.ws.rs.POST
 import jakarta.ws.rs.Path
 import jakarta.ws.rs.PathParam
@@ -32,6 +33,22 @@ class CasaResource {
         try {
             val casaDepositRequest = CasaService.CasaDepositRequest(accountId, request.amount)
             val response: RestResponse<CasaService.CasaDepositResponse> = casaService.deposit(casaDepositRequest)
+            return when (response.status) {
+                RestResponse.StatusCode.OK -> return response
+                RestResponse.StatusCode.NOT_FOUND -> RestResponse.status(RestResponse.Status.NOT_FOUND)
+                else -> throw WebApplicationException("Unexpected status: ${response.status}", response.status)
+            }
+        } catch (e: WebApplicationException) {
+            return RestResponse.status(e.response.status)
+        }
+    }
+
+    @GET
+    @Path("/balance/{accountId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    fun balance(@PathParam("accountId") accountId: String): RestResponse<CasaService.CasaBalanceResponse> {
+        try {
+            val response: RestResponse<CasaService.CasaBalanceResponse> = casaService.balance(accountId)
             return when (response.status) {
                 RestResponse.StatusCode.OK -> return response
                 RestResponse.StatusCode.NOT_FOUND -> RestResponse.status(RestResponse.Status.NOT_FOUND)
