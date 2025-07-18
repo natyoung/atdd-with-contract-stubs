@@ -2,6 +2,7 @@ import path from "path";
 import {MatchersV3, PactV3} from '@pact-foundation/pact';
 import DepositService from "../../app/lib/DepositService";
 import LoginService from "../../app/lib/LoginService";
+import BalanceService from "../../app/lib/BalanceService";
 
 const provider = new PactV3({
   dir: path.resolve(process.env.PACT_FOLDER || './pacts'),
@@ -91,6 +92,37 @@ describe('POST /login', () => {
     return provider.executeTest(async (mockserver) => {
       const service = new LoginService(mockserver.url);
       const response = await service.login(accountId, password)
+
+      expect(response.data).toMatchObject(expected);
+      expect(response.status).toEqual(200);
+    });
+  });
+});
+
+describe('GET /balance', () => {
+  it('returns status 200', async () => {
+    const accountId = '1'
+    const expected = {balance: 1};
+    const EXPECTED_BODY = MatchersV3.like(expected);
+
+    provider
+      .given('accountId 1 has a balance of 1')
+      .uponReceiving('a balance request')
+      .withRequest({
+        method: 'GET',
+        path: `/casa/balance/${accountId}`
+      })
+      .willRespondWith({
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: EXPECTED_BODY,
+      });
+
+    return provider.executeTest(async (mockserver) => {
+      const service = new BalanceService(mockserver.url);
+      const response = await service.balance(accountId)
 
       expect(response.data).toMatchObject(expected);
       expect(response.status).toEqual(200);

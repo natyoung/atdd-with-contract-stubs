@@ -36,7 +36,7 @@ describe('<LoginForm />', () => {
     expect(signInMock).toHaveBeenCalledWith('credentials', {
       accountId: accountId,
       password,
-      redirect: false,
+      redirect: true,
     });
 
     const success = await screen.findByTestId('success');
@@ -62,7 +62,7 @@ describe('<LoginForm />', () => {
     expect(signInMock).toHaveBeenCalledWith('credentials', {
       accountId,
       password,
-      redirect: false,
+      redirect: true,
     });
 
     const error = await screen.findByTestId('error');

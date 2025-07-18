@@ -6,6 +6,14 @@ export class DepositResponse {
   }
 }
 
+export class BalanceResponse {
+  balance: number;
+
+  constructor(balance: number) {
+    this.balance = balance;
+  }
+}
+
 export class LoginResponse {
   user: string;
 

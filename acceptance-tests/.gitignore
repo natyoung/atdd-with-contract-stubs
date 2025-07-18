@@ -104,3 +104,6 @@ pip-selfcheck.json
 
 ### JetBrains template
 .idea
+
+### test token
+playwright/.auth/*

@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from numbers import Number
 from typing import Any
 
 
@@ -9,6 +10,10 @@ class CasaDriver(ABC):
 
     @abstractmethod
     def deposit(self, account_id: str, amount: int) -> Any:
+        pass
+
+    @abstractmethod
+    def balance(self, account_id: str) -> Any:
         pass
 
     @abstractmethod
