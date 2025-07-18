@@ -26,7 +26,6 @@ class CasaResourceTest {
             balance = BigDecimal(1)
         }
 
-        print(casaApplicationService)
         given()
             .contentType(ContentType.JSON)
             .body("""{"amount": 1, "accountId": "1"}""")
@@ -50,5 +49,19 @@ class CasaResourceTest {
             .then()
             .log().all()
             .statusCode(404)
+    }
+
+    @Test
+    fun `should return the balance for an existing account successfully`() {
+        every { casaApplicationService.balance("1") } returns 1
+
+        given()
+            .contentType(ContentType.JSON)
+            .`when`()
+            .get("/balance/1")
+            .then()
+            .log().all()
+            .statusCode(200)
+            .body("balance", equalTo(1))
     }
 }

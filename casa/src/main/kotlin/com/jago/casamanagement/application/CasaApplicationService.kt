@@ -21,4 +21,10 @@ class CasaApplicationService @Inject constructor(
         casaService.deposit(account, BigDecimal(amount))
         return casaRepository.save(account)
     }
+
+    fun balance(accountId: String): Int {
+        val account = casaRepository.findByAccountId(accountId)
+            ?: throw WebApplicationException("Account not found", 404)
+        return account.balance.toInt()
+    }
 }

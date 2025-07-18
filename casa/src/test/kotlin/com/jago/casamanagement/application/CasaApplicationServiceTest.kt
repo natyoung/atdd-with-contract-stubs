@@ -49,7 +49,7 @@ class CasaApplicationServiceTest {
     }
 
     @Test
-    fun `should throw a 404 error for non-existing account`() {
+    fun `should throw a 404 error for deposit to non-existing account`() {
         // Given
         val accountId = "2"
         val amount = 100
@@ -59,6 +59,45 @@ class CasaApplicationServiceTest {
         // When
         val exception = assertThrows<WebApplicationException> {
             casaApplicationService.deposit(accountId, amount)
+        }
+
+        // Then
+        assertEquals("Account not found", exception.message)
+        assertEquals(404, exception.response.status)
+        verify { casaRepository.findByAccountId(accountId) }
+    }
+
+    @Test
+    fun `should get the balance of an existing account successfully`() {
+        // Given
+        val accountId = "1"
+        val account = CasaAccount().apply {
+            this.accountId = accountId
+            this.balance = BigDecimal.ONE
+        }
+
+        every { casaRepository.findByAccountId(accountId) } returns account
+
+        // When
+        val result = casaApplicationService.balance(accountId)
+
+        // Then
+        assertEquals(1, result)
+        verify {
+            casaRepository.findByAccountId(accountId)
+        }
+    }
+
+    @Test
+    fun `should throw a 404 error for balance query on non-existing account`() {
+        // Given
+        val accountId = "2"
+
+        every { casaRepository.findByAccountId(accountId) } returns null
+
+        // When
+        val exception = assertThrows<WebApplicationException> {
+            casaApplicationService.balance(accountId)
         }
 
         // Then

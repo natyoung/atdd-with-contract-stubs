@@ -32,6 +32,16 @@ class ProviderContractTest {
         context.verifyInteraction()
     }
 
+    @State("accountId 1 exists with balance of 1")
+    fun setUpAccountId1WithBalance1() {
+        dataSource.connection.use { connection ->
+            connection.createStatement().use { statement ->
+                statement.execute("DELETE FROM CasaAccount WHERE accountId = '1'")
+                statement.execute("INSERT INTO CasaAccount (id, accountId, balance) VALUES (1, '1', 1)")
+            }
+        }
+    }
+
     @State("accountId 1 exists")
     fun setUpAccountId1Exists() {
         dataSource.connection.use { connection ->

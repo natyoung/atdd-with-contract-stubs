@@ -26,3 +26,8 @@ class CasaApi(CasaDriver):
         response = requests.post(f"{self.BASE_URL}/deposit", json=payload)
         response.raise_for_status()
         return response.status_code == 200
+
+    def balance(self, account_id: str) -> bool:
+        response = requests.get(f"{self.BASE_URL}/balance/{account_id}")
+        response.raise_for_status()
+        return response.status_code == 200 and response.json()["balance"] == 1

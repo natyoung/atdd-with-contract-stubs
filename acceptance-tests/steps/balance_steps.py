@@ -1,5 +1,3 @@
-from numbers import Number
-
 from pytest_bdd import given, when, then, parsers, scenarios
 
 scenarios('../features/balance.feature')
